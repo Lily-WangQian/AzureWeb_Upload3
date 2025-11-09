@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bank and Standard Similarity Comparator</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light p-4">
+  <div class="container">
+    <h1 class="mb-4 text-center">Bank and Standard Similarity Comparator</h1>
+
+    {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+    {% if message %}<div class="alert alert-info">{{ message }}</div>{% endif %}
+
+    <form class="row g-3" method="POST" action="/analyze" enctype="multipart/form-data">
+      <div class="col-md-6">
+        <label class="form-label">Upload Bank ESG PDF:</label>
+        <input type="file" name="bank_pdf" class="form-control" accept="application/pdf" required>
+        <div class="form-text">Only .pdf is accepted.</div>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Select Standard:</label>
+        <select name="standard" class="form-select" required>
+          <option value="">-- Select Standard --</option>
+          {% for std in standards %}
+            <option value="{{ std }}" {% if selected==std %}selected{% endif %}>{{ std }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-primary w-100" type="submit">Calculate</button>
+      </div>
+    </form>
+
+    {% if result %}
+      <div class="mt-5 p-4 bg-white rounded shadow-sm">
+        <h4 class="mb-3">Result</h4>
+        <p><strong>Uploaded file:</strong> {{ result.filename }}</p>
+        <p><strong>Selected standard:</strong> {{ result.standard }}</p>
+
+        {% if std_info %}
+        <hr>
+        <h5 class="mb-3">Selected Standard Details</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-success">
+              <tr>
+                <th style="width:25%">Standard</th>
+                <th style="width:15%">Publication Date</th>
+                <th style="width:30%">TFIDF Keywords</th>
+                <th style="width:30%">Contextual Keywords</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ std_info.standard }}</td>
+                <td>{{ std_info.pub_date }}</td>
+                <td style="white-space:pre-wrap">{{ std_info.tfidf }}</td>
+                <td style="white-space:pre-wrap">{{ std_info.contextual }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+
+        <hr>
+        <h5>PDF Text Preview</h5>
+        <pre style="white-space:pre-wrap">{{ result.preview }}</pre>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Flask
+pdfplumber
+pandas
+gunicorn
+Werkzeug
