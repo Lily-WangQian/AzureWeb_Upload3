@@ -65,6 +65,29 @@
         </div>
         {% endif %}
 
+        {% if result.bank_pub_date or result.bank_tfidf %}
+        <hr>
+        <h5 class="mb-3">Uploaded Bank Report Details</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+            <thead class="table-info">
+              <tr>
+                <th style="width:25%">Bank Report</th>
+                <th style="width:15%">Publication Date</th>
+                <th style="width:60%">TFIDF Keywords</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ result.filename }}</td>
+                <td>{{ result.bank_pub_date }}</td>
+                <td style="white-space:pre-wrap">{{ result.bank_tfidf }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+
         <hr>
         <h5>PDF Text Preview</h5>
         <pre style="white-space:pre-wrap">{{ result.preview }}</pre>

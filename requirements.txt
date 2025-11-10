@@ -3,3 +3,5 @@ pdfplumber
 pandas
 gunicorn
 Werkzeug
+scikit-learn
+PyPDF2
