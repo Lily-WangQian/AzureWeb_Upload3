@@ -13,7 +13,7 @@
     {% if message %}<div class="alert alert-info">{{ message }}</div>{% endif %}
 
     <!-- Form -->
-    <form class="row g-3" method="POST" action="/analyze" enctype="multipart/form-data">
+    <form id="analyze-form" class="row g-3" method="POST" action="/analyze" enctype="multipart/form-data">
       <!-- Left: Upload (full width on small, half on large) -->
       <div class="col-12 col-lg-6">
         <label class="form-label">Upload Bank ESG PDF:</label>
@@ -25,8 +25,8 @@
       <div class="col-12 col-lg-6">
         <label class="form-label">Select Standard:</label>
         <!--
-          Small screens: d-grid (stacked, full-width, gap between)
-          Large screens: d-lg-flex (inline row) with a small horizontal gap
+          Small screens: stacked, full-width.
+          Large screens: inline with a small gap between dropdown and button.
         -->
         <div class="d-grid gap-2 d-lg-flex align-items-lg-end">
           <select name="standard" class="form-select" required>
@@ -39,6 +39,24 @@
         </div>
       </div>
     </form>
+
+    <!-- Processing progress bar (hidden until Calculate is clicked) -->
+    <div id="processing-container" class="mt-4" style="display: none;">
+      <label class="form-label">Processing your file…</label>
+      <div class="progress">
+        <div
+          id="processing-bar"
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          style="width: 0%;"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          0%
+        </div>
+      </div>
+      <small class="text-muted">Please wait. The analysis may take a little while.</small>
+    </div>
 
     {% if result %}
       <div class="mt-5 p-4 bg-white rounded shadow-sm">
@@ -101,5 +119,35 @@
       </div>
     {% endif %}
   </div>
+
+  <!-- Progress-bar script (NO disabling of inputs) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("analyze-form");
+      const processingContainer = document.getElementById("processing-container");
+      const processingBar = document.getElementById("processing-bar");
+
+      if (!form || !processingContainer || !processingBar) return;
+
+      form.addEventListener("submit", function () {
+        // show progress UI
+        processingContainer.style.display = "block";
+
+        // smooth fake progress from 0 to 99%
+        let percent = 0;
+        const interval = setInterval(function () {
+          if (percent < 99) {
+            percent += 1;
+            processingBar.style.width = percent + "%";
+            processingBar.textContent = percent + "%";
+          } else {
+            clearInterval(interval);
+          }
+        }, 200);
+        // IMPORTANT: we DO NOT disable the select or inputs,
+        // so all form fields are still submitted to Flask.
+      });
+    });
+  </script>
 </body>
 </html>
