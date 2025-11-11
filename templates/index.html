@@ -12,25 +12,27 @@
     {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
     {% if message %}<div class="alert alert-info">{{ message }}</div>{% endif %}
 
-    <form class="row g-3" method="POST" action="/analyze" enctype="multipart/form-data">
-      <!-- Left: upload PDF -->
-      <div class="col-md-6">
+    <!-- Form -->
+    <form class="row g-3 align-items-end" method="POST" action="/analyze" enctype="multipart/form-data">
+      <!-- Left side: upload (full width on small screens, half on large) -->
+      <div class="col-12 col-lg-6">
         <label class="form-label">Upload Bank ESG PDF:</label>
         <input type="file" name="bank_pdf" class="form-control" accept="application/pdf" required>
         <div class="form-text">Only .pdf is accepted.</div>
       </div>
 
-      <!-- Right: select standard + calculate button side-by-side -->
-      <div class="col-md-6">
+      <!-- Right side: select + button (stacked on small, inline with small gap on large) -->
+      <div class="col-12 col-lg-6">
         <label class="form-label">Select Standard:</label>
-        <div class="input-group">
-          <select name="standard" class="form-select" required>
+        <div class="d-flex">
+          <select name="standard" class="form-select flex-grow-1" required>
             <option value="">-- Select Standard --</option>
             {% for std in standards %}
               <option value="{{ std }}" {% if selected==std %}selected{% endif %}>{{ std }}</option>
             {% endfor %}
           </select>
-          <button class="btn btn-primary" type="submit">Calculate</button>
+          <!-- ms-2 = small left margin = little gap -->
+          <button class="btn btn-primary ms-2" type="submit">Calculate</button>
         </div>
       </div>
     </form>
@@ -67,7 +69,7 @@
         {% endif %}
 
         {% if result.bank_pub_date or result.bank_tfidf or result.bank_contextual %}
-        <h5 class="mb-3">Uploaded Bank Report Analysis</h5>
+        <h5 class="mb-3">Uploaded Bank Report Analysis (Same Layout)</h5>
         <div class="table-responsive mb-4">
           <table class="table table-bordered align-middle">
             <thead class="table-info">
