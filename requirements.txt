@@ -5,3 +5,4 @@ gunicorn
 Werkzeug
 scikit-learn
 PyPDF2
+yake
