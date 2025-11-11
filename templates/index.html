@@ -43,7 +43,7 @@
         {% if std_info %}
         <hr>
         <h5 class="mb-3">Selected Standard Details</h5>
-        <div class="table-responsive">
+        <div class="table-responsive mb-4">
           <table class="table table-bordered align-middle">
             <thead class="table-success">
               <tr>
@@ -66,16 +66,15 @@
         {% endif %}
 
         {% if result.bank_pub_date or result.bank_tfidf or result.bank_contextual %}
-        <hr>
-        <h5 class="mb-3">Uploaded Bank Report Details</h5>
-        <div class="table-responsive">
+        <h5 class="mb-3">Uploaded Bank Report Analysis (Same Layout)</h5>
+        <div class="table-responsive mb-4">
           <table class="table table-bordered align-middle">
             <thead class="table-info">
               <tr>
-                <th style="width:20%">Bank Report</th>
+                <th style="width:25%">Standard / Bank Report</th>
                 <th style="width:15%">Publication Date</th>
-                <th style="width:32%">TFIDF Keywords</th>
-                <th style="width:33%">Contextual Keywords</th>
+                <th style="width:30%">TFIDF Keywords</th>
+                <th style="width:30%">Contextual Keywords</th>
               </tr>
             </thead>
             <tbody>
