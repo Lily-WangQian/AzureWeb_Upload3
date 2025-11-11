@@ -13,26 +13,29 @@
     {% if message %}<div class="alert alert-info">{{ message }}</div>{% endif %}
 
     <!-- Form -->
-    <form class="row g-3 align-items-end" method="POST" action="/analyze" enctype="multipart/form-data">
-      <!-- Left side: upload (full width on small screens, half on large) -->
+    <form class="row g-3" method="POST" action="/analyze" enctype="multipart/form-data">
+      <!-- Left: Upload (full width on small, half on large) -->
       <div class="col-12 col-lg-6">
         <label class="form-label">Upload Bank ESG PDF:</label>
         <input type="file" name="bank_pdf" class="form-control" accept="application/pdf" required>
         <div class="form-text">Only .pdf is accepted.</div>
       </div>
 
-      <!-- Right side: select + button (stacked on small, inline with small gap on large) -->
+      <!-- Right: Select + Calculate -->
       <div class="col-12 col-lg-6">
         <label class="form-label">Select Standard:</label>
-        <div class="d-flex">
-          <select name="standard" class="form-select flex-grow-1" required>
+        <!--
+          Small screens: d-grid (stacked, full-width, gap between)
+          Large screens: d-lg-flex (inline row) with a small horizontal gap
+        -->
+        <div class="d-grid gap-2 d-lg-flex align-items-lg-end">
+          <select name="standard" class="form-select" required>
             <option value="">-- Select Standard --</option>
             {% for std in standards %}
               <option value="{{ std }}" {% if selected==std %}selected{% endif %}>{{ std }}</option>
             {% endfor %}
           </select>
-          <!-- ms-2 = small left margin = little gap -->
-          <button class="btn btn-primary ms-2" type="submit">Calculate</button>
+          <button class="btn btn-primary ms-lg-2" type="submit">Calculate</button>
         </div>
       </div>
     </form>
