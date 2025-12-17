@@ -1,8 +1,13 @@
 Flask
-pdfplumber
-pandas
 gunicorn
 Werkzeug
+
+pandas
 scikit-learn
-PyPDF2
-yake
+numpy
+
+pypdf
+
+torch
+sentence-transformers
+keybert
