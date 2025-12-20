@@ -20,7 +20,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # ------------ Load standards ------------
 # CSV must contain (or be mappable to):
 #   Standard | Publication Date | TFIDF Keywords | Contextual Keywords
-df = pd.read_csv("standards keywords.csv")
+df = pd.read_csv("standards_keywords.csv")
 df.columns = df.columns.str.strip()
 
 # normalize possible variants
